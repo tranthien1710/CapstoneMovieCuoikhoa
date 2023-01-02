@@ -1,0 +1,20 @@
+@media screen and (max-width:768px) {
+    .group_navbar {
+        display: block;
+        position: fixed;
+        background-color: #141414;
+        top: 40px;
+        left: -100vh;
+        padding: 20px;
+        border-radius: 0.5rem;
+       transition: all 0.5s;
+       
+    }
+    .group_navbar li{
+       padding: 10px;
+       border-bottom:  1px solid white;
+    }
+    .group_navbar.show{
+        left: 0;
+    }
+}

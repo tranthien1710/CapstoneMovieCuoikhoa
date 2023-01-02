@@ -1,0 +1,12 @@
+.chair{
+    font-weight: bold;
+   
+}
+.chair.booked{
+    background-color: red;
+    color: white;
+}
+.chair.booking{
+    background-color: yellow;
+    color: white;
+}
