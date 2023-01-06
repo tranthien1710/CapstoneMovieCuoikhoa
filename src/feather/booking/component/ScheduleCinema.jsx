@@ -9,9 +9,9 @@ const ScheduleCinema = () => {
     const dispatch = useDispatch();
     const [listCinema, setlistCinema] = useState([])
     const listSheduleCinema = useSelector(state => state.booking.listScheduleCinema)
-    console.log(listCinema)
+    
     useEffect(() => {
-        dispatch(fetchScheduleCinemaAction)
+       
         getInfoScheduleCinema(listSheduleCinema[0]?.maHeThongRap).then(res => setlistCinema(res.data.content))
     }, [listSheduleCinema])
     

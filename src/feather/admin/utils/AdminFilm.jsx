@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { Button, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchListFilmAction } from '../redux/action';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { fetchDeleteFilmACtion, fetchListFilmAction } from '../redux/action';
+import { CalendarOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { AudioOutlined } from '@ant-design/icons';
 import { Input, Space } from 'antd';
 import { Link } from 'react-router-dom';
@@ -19,9 +19,9 @@ const suffix = (
 
 const AdminFilm = () => {
 
-  const disoatch = useDispatch()
+  const dispatch = useDispatch()
   useEffect(() => {
-    disoatch(fetchListFilmAction)
+    dispatch(fetchListFilmAction())
   }, [])
   const listFilm = useSelector(state => state.admin.ListFlim)
   const columns = [
@@ -57,7 +57,24 @@ const AdminFilm = () => {
     {
       title: 'Action',
       render: (text, listFilm) => {
-        return <p className='text-xl'><span className='mx-2 cursor-pointer' ><EditOutlined /></span> <span className='mx-2 cursor-pointer'><DeleteOutlined /></span></p>
+        return <p className='text-xl'><Link to={`/admin/editfilm/${listFilm.maPhim}`} >
+          <span className='mx-2 cursor-pointer' ><EditOutlined /></span>
+        </Link>
+          <span onClick={()=>{
+            if(window.confirm("Bạn chắc muốn xoá phim "+listFilm.tenPhim)){
+             try {
+              dispatch(fetchDeleteFilmACtion(listFilm.maPhim))
+              dispatch(fetchListFilmAction)
+             } catch (error) {
+              console.log(error)
+             }
+            }
+           
+          }} className='mx-2 cursor-pointer'><DeleteOutlined /></span>
+       <Link to={`/admin/showtime/${listFilm.maPhim}`} > <span onClick={()=>{
+        localStorage.setItem("phim",JSON.stringify(listFilm))
+       }} ><CalendarOutlined /></span></Link>
+        </p>
       }
 
     },
@@ -66,13 +83,15 @@ const AdminFilm = () => {
   const onChange = (value) => {
 
   }
-  const onSearch=(value)=>{
-
+  const onSearch = (value) => {
+      
+      dispatch(fetchListFilmAction(value))
   }
   return (
     <div>
-      <Link to='/admin/addfilm'> <Button type='primary' size='large' >Thêm Phim</Button></Link>
+      <Link to='/admin/addfilm'> <Button className='my-2' type='primary' size='large' >Thêm Phim</Button></Link>
       <Search
+     
         placeholder="input search text"
         allowClear
         enterButton="Search"

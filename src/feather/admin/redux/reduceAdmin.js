@@ -4,6 +4,7 @@ const { default: produce } = require("immer")
 
 const initailState = {
     ListFlim: [],
+    ListUser:[],
 }
 
 const reduce = (state = initailState, { type, payload }) => {
@@ -12,6 +13,9 @@ const reduce = (state = initailState, { type, payload }) => {
             case actionTypeAdmin.SHOW_LIST_FILM:
                 draft.ListFlim = payload;
                 break;
+                case actionTypeAdmin.SHOW_LIST_USER:
+                    draft.ListUser = payload;
+                    break;
             default:
                 break;
         }
